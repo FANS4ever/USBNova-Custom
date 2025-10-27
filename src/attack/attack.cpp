@@ -2,15 +2,15 @@
 
 #include "attack.h"
 
-#include "../../config.h"
-#include "../../debug.h"
+#include "config.h"
+#include "debug.h"
 
-#include "../msc/msc.h"
-#include "../duckparser/duckparser.h"
-#include "../preferences/preferences.h"
-#include "../led/led.h"
-#include "../hid/hid.h"
-#include "../hid/keyboard.h"
+#include "msc/msc.h"
+#include "duckparser/duckparser.h"
+#include "preferences/preferences.h"
+#include "led/led.h"
+#include "hid/hid.h"
+#include "hid/keyboard.h"
 
 namespace attack {
     // ====== PRIVATE ====== //

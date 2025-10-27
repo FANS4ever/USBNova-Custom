@@ -2,12 +2,12 @@
 
 #include "duckparser.h"
 
-#include "../../config.h"
-#include "../../debug.h"
-#include "../hid/keyboard.h"
-#include "../hid/mouse.h"
-#include "../led/led.h"
-#include "../tasks/tasks.h"
+#include "config.h"
+#include "debug.h"
+#include "hid/keyboard.h"
+#include "hid/mouse.h"
+#include "led/led.h"
+#include "tasks/tasks.h"
 
 #include <Arduino.h> // millis(), delay()
 

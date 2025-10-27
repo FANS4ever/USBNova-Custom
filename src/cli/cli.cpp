@@ -4,14 +4,13 @@
 
 #include <SimpleCLI.h>
 
-#include "../duckparser/duckparser.h"
-#include "../preferences/preferences.h"
-#include "../selector/selector.h"
-#include "../led/led.h"
-#include "../attack/attack.h"
-#include "../msc/msc.h"
-#include "../../config.h"
-#include "../../debug.h"
+#include "duckparser/duckparser.h"
+#include "preferences/preferences.h"
+#include "selector/selector.h"
+#include "led/led.h"
+#include "attack/attack.h"
+#include "msc/msc.h"
+#include "debug.h"
 
 #define BUFFER_SIZE 1024
 

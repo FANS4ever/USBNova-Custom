@@ -2,8 +2,7 @@
 
 #include "msc.h"
 
-#include "../../config.h"
-#include "../../debug.h"
+#include "debug.h"
 
 #include <string>
 #include <stack>

@@ -2,7 +2,6 @@
 
 #pragma once
 
-#include "../../config.h"
 
 #include <cstdint> // uint8_t
 #include <string>  // std::string

@@ -4,7 +4,7 @@
 
 // If you get an error here, you probably have selected the wrong board.
 // You can find the correct board under Tools > Board.
-#include "../locale/locale.h"
+#include "locale/locale.h"
 
 namespace keyboard {
     typedef struct report_t {

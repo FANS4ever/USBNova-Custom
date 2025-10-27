@@ -2,11 +2,11 @@
 
 #include "preferences.h"
 
-#include "../../config.h"
-#include "../../debug.h"
+#include "config.h"
+#include "debug.h"
 
 #include <ArduinoJson.h>
-#include "../msc/msc.h"
+#include "msc/msc.h"
 
 #define JSON_SIZE 1536
 

@@ -4,7 +4,6 @@
 
 #include <Arduino.h> // pinMode(), digitalRead()
 
-#include "../../config.h"
 
 #define CHANGE_DELAY 200
 
@@ -22,7 +21,7 @@ namespace selector {
     // ===== PUBLIC ===== //
     void init() {
         pinMode(SELECTOR, INPUT_PULLUP);
-    
+
         attachInterrupt(digitalPinToInterrupt(SELECTOR), isr, CHANGE);
 
         initial_mode = read();
@@ -37,10 +36,10 @@ namespace selector {
     }
 
     bool changed() {
-        if(change_flag && (millis() - change_time) > CHANGE_DELAY) {
+        if (change_flag && ((millis() - change_time) > CHANGE_DELAY)) {
             change_flag = false;
             return true;
         }
-        return false; 
+        return false;
     }
 }

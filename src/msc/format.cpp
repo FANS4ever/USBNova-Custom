@@ -2,8 +2,7 @@
 
 #include "format.h"
 
-#include "../../config.h"
-#include "../../debug.h"
+#include "debug.h"
 
 // This module is based on the Adafruit SPI Flash FatFs Format Example
 // https://github.com/adafruit/Adafruit_SPIFlash/tree/master/examples/SdFat_format

@@ -2,7 +2,6 @@
 
 #include "led.h"
 
-#include "../../config.h"
 
 #include <Arduino.h>           // pinMode(), analogWrite(), millis()
 #include <Adafruit_NeoPixel.h> // Adafruit_NeoPixel
