@@ -120,7 +120,7 @@ namespace duckparser {
         char newstr[len+1];
 
         memcpy(newstr, (void*)str, len);
-        newstr[len+1] = '\0';
+        newstr[len] = '\0';
 
         return atoi(newstr);
     }
