@@ -8,7 +8,11 @@
 
 namespace led {
     // ========== PRIVATE ========= //
+#ifdef LED_SIMPLE
+    bool enabled { false };
+#else
     Adafruit_NeoPixel led { 1, LED_PIN, NEO_GRB + NEO_KHZ800 };
+#endif
 
     int blink_color[3] { 0, 0, 0 };
     unsigned long blink_intv { 0 };
@@ -16,6 +20,11 @@ namespace led {
     bool blink_flag { false };
 
     void change_color(int r, int g, int b) {
+#if defined(LED_SIMPLE)
+        if (enabled) {
+            digitalWrite(LED_PIN, (r+g+b));
+        }
+#else
         if (LED_PIN < 0) return;
 
         for (size_t i = 0; i<led.numPixels(); i++) {
@@ -23,24 +32,36 @@ namespace led {
         }
 
         led.show();
+#endif
     }
 
     // ========== PUBLIC ========= //
     void init() {
+#if defined(LED_SIMPLE)
+        pinMode(LED_PIN, OUTPUT);
+#else
         if (LED_PIN < 0) return;
 
         led.begin();
         led.show();
+#endif
     }
 
-    void setEnable(bool enabled) {
+    void setEnable(bool _enabled) {
+#ifdef LED_SIMPLE
+        if (!_enabled) {
+            enabled = _enabled;
+            digitalWrite(LED_PIN, 0);
+        }
+#else
         if (LED_PIN < 0) return;
 
-        if (enabled) {
+        if (_enabled) {
             led.setBrightness(255);
         } else {
             led.setBrightness(0);
         }
+#endif
     }
 
     void setColor(int* color) {

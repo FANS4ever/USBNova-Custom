@@ -4,8 +4,7 @@
 
 #include "debug.h"
 
-#include <string>
-#include <stack>
+#include <stack> // std::stack
 
 #include <SPI.h>
 #include <Adafruit_SPIFlash.h>

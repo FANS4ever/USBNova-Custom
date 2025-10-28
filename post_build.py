@@ -14,7 +14,7 @@ def post_build_uf2(source, target, env):
     env_name = env["PIOENV"]
     
     # Only MKI (SAMD21) needs manual UF2 conversion
-    if "mki" not in env_name:
+    if "mki" not in env_name and "samd21" not in env_name:
         return
     
     bin_file = str(target[0])

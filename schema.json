@@ -105,6 +105,94 @@
                     "title": "USB Product Descriptor",
                     "default": "USB Nova"
                 },
+                "vid1": {
+                    "type": "string",
+                    "title": "USB Vendor ID",
+                    "pattern": "^[0-9A-F]{4}$",
+                    "default": "16D0",
+                    "examples": [
+                        "05AC"
+                    ],
+                    "minLength": 4,
+                    "maxLength": 4
+                },
+                "pid1": {
+                    "type": "string",
+                    "title": "USB Product ID",
+                    "pattern": "^[0-9A-F]{4}$",
+                    "default": "103F",
+                    "examples": [
+                        "0250"
+                    ],
+                    "minLength": 4,
+                    "maxLength": 4
+                },
+                "version1": {
+                    "type": "string",
+                    "title": "USB Product Revision (0100 => 1.0)",
+                    "default": "0100",
+                    "minLength": 4,
+                    "maxLength": 4
+                },
+                "serial1": {
+                    "type": "string",
+                    "title": "USB Serial Number Descriptor",
+                    "default": "1337"
+                },
+                "manufacturer1": {
+                    "type": "string",
+                    "title": "USB Manufacturer Descriptor",
+                    "default": "Maltronics"
+                },
+                "product1": {
+                    "type": "string",
+                    "title": "USB Product Descriptor",
+                    "default": "MalDuino"
+                },
+                "vid2": {
+                    "type": "string",
+                    "title": "USB Vendor ID",
+                    "pattern": "^[0-9A-F]{4}$",
+                    "default": "16D0",
+                    "examples": [
+                        "05AC"
+                    ],
+                    "minLength": 4,
+                    "maxLength": 4
+                },
+                "pid2": {
+                    "type": "string",
+                    "title": "USB Product ID",
+                    "pattern": "^[0-9A-F]{4}$",
+                    "default": "103F",
+                    "examples": [
+                        "0250"
+                    ],
+                    "minLength": 4,
+                    "maxLength": 4
+                },
+                "version2": {
+                    "type": "string",
+                    "title": "USB Product Revision (0100 => 1.0)",
+                    "default": "0100",
+                    "minLength": 4,
+                    "maxLength": 4
+                },
+                "serial2": {
+                    "type": "string",
+                    "title": "USB Serial Number Descriptor",
+                    "default": "1337"
+                },
+                "manufacturer2": {
+                    "type": "string",
+                    "title": "USB Manufacturer Descriptor",
+                    "default": "Maltronics"
+                },
+                "product2": {
+                    "type": "string",
+                    "title": "USB Product Descriptor",
+                    "default": "MalDuino"
+                },
                 "default_layout": {
                     "type": "string",
                     "title": "Default Keyboard Layout",

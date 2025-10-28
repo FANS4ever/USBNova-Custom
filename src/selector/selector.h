@@ -12,5 +12,9 @@ namespace selector {
     Mode mode();
     Mode read();
 
+#ifdef MULTI_SELECTOR
+    int position();
+#endif
+
     bool changed();
 }

@@ -22,13 +22,17 @@ void update() {
 }
 
 void setup() {
+    led::init();
+
     // Start Serial (for debug) or disable it
     debug_init();
 
     // Initialize memory and check for problems
-    if (!msc::init()) {
+    bool msc_ok = msc::init();
+    if (!msc_ok) {
+        debugln("Couldnt init SD");
         led::setColor(255, 0, 0, 200);
-        return;
+        // Don't abort; continue with defaults but skip MSC functionality.
     }
 
     // Read mode from selector switch
@@ -36,26 +40,43 @@ void setup() {
 
     // Load setting and set USB Device IDs
     preferences::reset();
-    preferences::load();
+    if (msc_ok) {
+        preferences::load();
+    } else {
+        // msc unavailable: keep defaults in preferences
+    }
     if (selector::mode() == SETUP) preferences::save();
 
+#ifdef MULTI_SELECTOR
+    if (selector::position() == 1) {
+        hid::setID(preferences::getVID1(), preferences::getPID1(), preferences::getVersion1());
+        hid::setSerial(preferences::getSerial1());
+        hid::setManufacturer(preferences::getManufacturer1());
+        hid::setProduct(preferences::getProduct1());
+    } else {
+        hid::setID(preferences::getVID2(), preferences::getPID2(), preferences::getVersion2());
+        hid::setSerial(preferences::getSerial2());
+        hid::setManufacturer(preferences::getManufacturer2());
+        hid::setProduct(preferences::getProduct2());
+    }
+#else
     hid::setID(preferences::getVID(), preferences::getPID(), preferences::getVersion());
     hid::setSerial(preferences::getSerial());
     hid::setManufacturer(preferences::getManufacturer());
     hid::setProduct(preferences::getProduct());
+#endif
 
     // Start Keyboard
     if ((selector::mode() == ATTACK) || preferences::hidEnabled()) {
         hid::init();
     }
 
-    // Start USB Drive
-    if (preferences::mscEnabled() || (selector::mode() == SETUP)) {
+    // Start USB Drive (only if MSC initialized and enabled)
+    if (msc_ok && (preferences::mscEnabled() || (selector::mode() == SETUP))) {
         msc::enableDrive();
     }
 
-    // Start LED
-    led::init();
+    // LED settings
     led::setEnable(preferences::ledEnabled());
 
     if (selector::mode() == SETUP) {
@@ -79,12 +100,24 @@ void setup() {
         preferences::save();
     }
 
+#ifdef MULTI_SELECTOR
+    // Create 1.txt file if it doesn't exist yet
+    if (msc::find(1) == "") {
+        msc::write("1.txt", "# Hello World\n", 14);
+    }
+
+    // Create 2.txt file if it doesn't exist yet
+    if (msc::find(2) == "") {
+        msc::write("2.txt", "# Hello World\n", 14);
+    }
+#else
     // Create main_script.txt if it doesn't exist yet
     if (!msc::exists(preferences::getMainScript().c_str())) {
         char message[21];
         sprintf(message, "# USB Nova (v%s)\n", VERSION);
         msc::write(preferences::getMainScript().c_str(), message, 20);
     }
+#endif
 
     // Setup background tasks
     tasks::setCallback(update);
@@ -118,6 +151,12 @@ void loop() {
         delay(100);
         attack::start();                            // Run script
         led::setColor(preferences::getIdleColor()); // Set LED to green
+
+        // Don't run again
+        while (true) {
+            tasks::update();
+            cli::update();
+        }
     } else if (selector::changed()) {
         // ==========  Setup Mode ==========  //
         if ((selector::mode() == SETUP) && preferences::hidEnabled()) {

@@ -11,9 +11,9 @@ namespace hid {
     bool    indicator_changed = false; // Whether or not any indicator changed since last time
     bool    indicator_read    = false; // If initial indicator was read
 
-    std::string serial       = "1337";
-    std::string manufacturer = "SpacehuhnTech";
-    std::string product      = "USB Nova";
+    std::string serial       { HID_SERIAL };
+    std::string manufacturer { HID_MANUFACTURER };
+    std::string product      { HID_PRODUCT };
 
     // HID report descriptor using TinyUSB's template
     // Single Report (no ID) descriptor

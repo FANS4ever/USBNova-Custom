@@ -138,6 +138,19 @@ namespace cli {
                 led::setColor(preferences::getIdleColor());
             }
         }).setDescription(" Start a BadUSB Script.");
+
+#ifdef MULTI_SELECTOR
+        // find
+        cli.addSingleArgCmd("find", [](cmd* c) {
+            const int pos { selector::position() };
+            const std::string file { msc::find(pos) };
+
+            Serial.print("Position: ");
+            Serial.println(pos);
+            Serial.print("Script: ");
+            Serial.println(file.c_str());
+        }).setDescription(" Find script based on switch position.");
+#endif
     }
 
     void update() {

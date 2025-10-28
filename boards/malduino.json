@@ -1,0 +1,53 @@
+{
+    "build": {
+        "arduino": {
+            "ldscript": "flash_with_bootloader.ld"
+        },
+        "core": "adafruit",
+        "cpu": "cortex-m0plus",
+        "extra_flags": "-D__SAMD21E18A__ -DCRYSTALLESS -DADAFRUIT_QTPY_M0 -DARDUINO_SAMD_ZERO -DARM_MATH_CM0PLUS",
+        "f_cpu": "48000000L",
+        "system": "samd",
+        "hwids": [
+            [
+                "0x16D0",
+                "0x103F"
+            ]
+        ],
+        "mcu": "samd21e18a",
+        "usb_product": "MalDuino",
+        "usb_manufacturer": "Maltronics",
+        "variant": "qtpy_m0",
+        "vid": "0x16D0",
+        "pid": "0x103F"
+    },
+    "frameworks": [
+        "arduino"
+    ],
+    "name": "MalDuino (SAMD21E18A)",
+    "debug": {
+        "jlink_device": "ATSAMD21E18",
+        "openocd_chipname": "at91samd21e18",
+        "openocd_target": "at91samdXX",
+        "svd_path": "ATSAMD21E18A.svd"
+    },
+    "upload": {
+        "maximum_ram_size": 32768,
+        "disable_flushing": true,
+        "maximum_size": 262144,
+        "native_usb": true,
+        "offset_address": "0x2000",
+        "protocol": "sam-ba",
+        "protocols": [
+            "sam-ba",
+            "blackmagic",
+            "jlink",
+            "atmel-ice"
+        ],
+        "require_upload_port": true,
+        "use_1200bps_touch": true,
+        "wait_for_upload_port": true
+    },
+    "url": "https://github.com/SpacehuhnTech/USBNova",
+    "vendor": "Maltronics"
+}

@@ -25,12 +25,28 @@ namespace preferences {
     bool enable_led;
     bool enable_hid;
 
+#ifdef MULTI_SELECTOR
+    std::string vid1;
+    std::string pid1;
+    std::string version1;
+    std::string serial1;
+    std::string manufacturer1;
+    std::string product1;
+
+    std::string vid2;
+    std::string pid2;
+    std::string version2;
+    std::string serial2;
+    std::string manufacturer2;
+    std::string product2;
+#else
     std::string vid;
     std::string pid;
     std::string version;
     std::string serial;
     std::string manufacturer;
     std::string product;
+#endif
 
     std::string default_layout;
     int default_delay;
@@ -65,21 +81,40 @@ namespace preferences {
         root["enable_led"] = enable_led;
         root["enable_hid"] = enable_hid;
 
+#ifdef MULTI_SELECTOR
+        root["vid1"]          = vid1;
+        root["pid1"]          = pid1;
+        root["version1"]      = version1;
+        root["serial1"]       = serial1;
+        root["manufacturer1"] = manufacturer1;
+        root["product1"]      = product1;
+
+        root["vid2"]          = vid2;
+        root["pid2"]          = pid2;
+        root["version2"]      = version2;
+        root["serial2"]       = serial2;
+        root["manufacturer2"] = manufacturer2;
+        root["product2"]      = product2;
+
+#else
         root["vid"]          = vid;
         root["pid"]          = pid;
         root["version"]      = version;
         root["serial"]       = serial;
         root["manufacturer"] = manufacturer;
         root["product"]      = product;
+#endif
 
         root["default_layout"] = default_layout;
         root["default_delay"]  = default_delay;
 
+#ifndef MULTI_SELECTOR
         root["main_script"] = main_script;
 
         add_array(root, "attack_color", attack_color, 4);
         add_array(root, "setup_color", setup_color, 4);
         add_array(root, "idle_color", idle_color, 4);
+#endif
 
         root["disable_capslock"] = disable_capslock;
         root["run_on_indicator"] = run_on_indicator;
@@ -114,7 +149,7 @@ namespace preferences {
         DynamicJsonDocument config_doc(JSON_SIZE);
 
         // Open the file and read it into a buffer
-        if (!msc::open(PREFERENCES_PATH), false) return;
+        if (!msc::open(PREFERENCES_PATH)) return;
         size_t read = msc::read(buffer, JSON_SIZE);
         msc::close();
 
@@ -135,21 +170,39 @@ namespace preferences {
         read_item<bool>(config_doc, "enable_led", enable_led);
         read_item<bool>(config_doc, "enable_hid", enable_hid);
 
+#ifdef MULTI_SELECTOR
+        read_item<std::string>(config_doc, "vid1", vid1);
+        read_item<std::string>(config_doc, "pid1", pid1);
+        read_item<std::string>(config_doc, "version1", version1);
+        read_item<std::string>(config_doc, "serial1", serial1);
+        read_item<std::string>(config_doc, "manufacturer1", manufacturer1);
+        read_item<std::string>(config_doc, "product1", product1);
+
+        read_item<std::string>(config_doc, "vid2", vid2);
+        read_item<std::string>(config_doc, "pid2", pid2);
+        read_item<std::string>(config_doc, "version2", version2);
+        read_item<std::string>(config_doc, "serial2", serial2);
+        read_item<std::string>(config_doc, "manufacturer2", manufacturer2);
+        read_item<std::string>(config_doc, "product2", product2);
+#else
         read_item<std::string>(config_doc, "vid", vid);
         read_item<std::string>(config_doc, "pid", pid);
         read_item<std::string>(config_doc, "version", version);
         read_item<std::string>(config_doc, "serial", serial);
         read_item<std::string>(config_doc, "manufacturer", manufacturer);
         read_item<std::string>(config_doc, "product", product);
+#endif
 
         read_item<std::string>(config_doc, "default_layout", default_layout);
         read_item<int>(config_doc, "default_delay", default_delay);
 
+#ifndef MULTI_SELECTOR
         read_item<std::string>(config_doc, "main_script", main_script);
 
         read_array(config_doc, "attack_color", attack_color, 4);
         read_array(config_doc, "setup_color", setup_color, 4);
         read_array(config_doc, "idle_color", idle_color, 4);
+#endif
 
         // Format Flash (Drive name/Disk label max 11 characters)
         format = config_doc.containsKey("format");
@@ -189,17 +242,35 @@ namespace preferences {
         enable_led = true;
         enable_hid = true;
 
+#ifdef MULTI_SELECTOR
+        vid1          = "16D0";
+        pid1          = "103F";
+        version1      = "0100";
+        serial1       = "1337";
+        manufacturer1 = "Maltronics";
+        product1      = "MalDuino";
+
+        vid2          = "16D0";
+        pid2          = "103F";
+        version2      = "0100";
+        serial2       = "1337";
+        manufacturer2 = "Maltronics";
+        product2      = "MalDuino";
+#else
         vid          = "16D0";
         pid          = "11A4";
         version      = "0100";
         serial       = "1337";
         manufacturer = "SpacehuhnTech";
         product      = "USB Nova";
+#endif
 
         default_layout = "US";
         default_delay  = 5;
 
+#ifndef MULTI_SELECTOR
         main_script = "main_script.txt";
+#endif
 
         attack_color[0] = 128;
         attack_color[1] = 0;
@@ -254,6 +325,56 @@ namespace preferences {
         return enable_hid;
     }
 
+#ifdef MULTI_SELECTOR
+    uint16_t getVID1() {
+        return std::stoi(vid1, nullptr, 16);
+    }
+
+    uint16_t getPID1() {
+        return std::stoi(pid1, nullptr, 16);
+    }
+
+    uint16_t getVersion1() {
+        return std::stoi(version1, nullptr, 16);
+    }
+
+    std::string getSerial1() {
+        return serial1;
+    }
+
+    std::string getManufacturer1() {
+        return manufacturer1;
+    }
+
+    std::string getProduct1() {
+        return product1;
+    }
+
+    uint16_t getVID2() {
+        return std::stoi(vid2, nullptr, 16);
+    }
+
+    uint16_t getPID2() {
+        return std::stoi(pid2, nullptr, 16);
+    }
+
+    uint16_t getVersion2() {
+        return std::stoi(version2, nullptr, 16);
+    }
+
+    std::string getSerial2() {
+        return serial2;
+    }
+
+    std::string getManufacturer2() {
+        return manufacturer2;
+    }
+
+    std::string getProduct2() {
+        return product2;
+    }
+
+#else
     uint16_t getVID() {
         return std::stoi(vid, nullptr, 16);
     }
@@ -278,6 +399,8 @@ namespace preferences {
         return product;
     }
 
+#endif
+
     std::string getDefaultLayout() {
         return default_layout;
     }
@@ -286,9 +409,12 @@ namespace preferences {
         return default_delay;
     }
 
+#ifndef MULTI_SELECTOR
     std::string getMainScript() {
         return main_script;
     }
+
+#endif
 
     int* getAttackColor() {
         return attack_color;

@@ -314,6 +314,7 @@ namespace duckparser {
                 ignore_delay = true;
             }
             // LED
+#if !defined(LED_DISABLED)
             else if (compare(cmd->str, cmd->len, "LED", CASE_SENSETIVE)) {
                 // i.e. LED R SOLID
                 if (wl->size == 3) {
@@ -363,6 +364,7 @@ namespace duckparser {
 
                 ignore_delay = true;
             }
+#endif
             // KEYCODE
             else if (compare(cmd->str, cmd->len, "KEYCODE", CASE_SENSETIVE)) {
                 word_node* w = cmd->next;

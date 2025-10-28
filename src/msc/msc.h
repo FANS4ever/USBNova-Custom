@@ -4,6 +4,9 @@
 
 #include "SdFat.h"
 
+#include <cstddef> // size_t
+#include <string>  // std::string
+
 namespace msc {
     bool init();
     bool format(const char* drive_name = "USB Nova");
@@ -27,4 +30,8 @@ namespace msc {
     bool getInLine();
 
     size_t write(const char* path, const char* buffer, size_t len);
+
+#ifdef MULTI_SELECTOR
+    std::string find(const int num);
+#endif
 }

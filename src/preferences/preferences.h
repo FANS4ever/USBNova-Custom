@@ -15,6 +15,23 @@ namespace preferences {
     bool ledEnabled();
     bool hidEnabled();
 
+#ifdef MULTI_SELECTOR
+    uint16_t getVID1();
+    uint16_t getPID1();
+    uint16_t getVersion1();
+
+    std::string getSerial1();
+    std::string getManufacturer1();
+    std::string getProduct1();
+
+    uint16_t getVID2();
+    uint16_t getPID2();
+    uint16_t getVersion2();
+
+    std::string getSerial2();
+    std::string getManufacturer2();
+    std::string getProduct2();
+#else
     uint16_t getVID();
     uint16_t getPID();
     uint16_t getVersion();
@@ -22,11 +39,14 @@ namespace preferences {
     std::string getSerial();
     std::string getManufacturer();
     std::string getProduct();
+#endif
 
     std::string getDefaultLayout();
     int getDefaultDelay();
 
+#ifndef MULTI_SELECTOR
     std::string getMainScript();
+#endif
 
     int* getAttackColor();
     int* getSetupColor();

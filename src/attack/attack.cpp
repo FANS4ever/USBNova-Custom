@@ -11,6 +11,7 @@
 #include "led/led.h"
 #include "hid/hid.h"
 #include "hid/keyboard.h"
+#include "selector/selector.h" // selector::position() (For MULTI_SELECTOR)
 
 namespace attack {
     // ====== PRIVATE ====== //
@@ -30,8 +31,13 @@ namespace attack {
             hid::indicatorChanged();
         }
 
+#ifdef MULTI_SELECTOR
+        // Open main BadUSB script
+        msc::open(path);
+#else
         // Open main BadUSB script
         msc::open(preferences::getMainScript().c_str());
+#endif
 
         // Read and parse file
         char buffer[READ_BUFFER];
@@ -98,6 +104,17 @@ namespace attack {
     }
 
     void start() {
+#ifdef MULTI_SELECTOR
+        // Get switch position
+        int pos = selector::position();
+
+        // Find file that starts with that number
+        std::string path = msc::find(pos);
+
+        // If script was found, start running it
+        if (path != "") start(path.c_str());
+#else
         start(preferences::getMainScript().c_str());
+#endif
     }
 }
