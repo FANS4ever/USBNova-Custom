@@ -87,9 +87,11 @@ namespace attack {
             if (duckparser::loopBegin()) {
                 start_pos = msc::getPosition();
                 loops     = duckparser::getLoops();
-            } else if (duckparser::loopEnd() && (loops > 1)) {
+            } else if (duckparser::loopEnd() && ((loops > 1) || (loops <= 0))) {
+                // If loops > 1: decrement each time until it reaches 1 and exit then
+                // If loops == 0 or loops < 0: treat as infinite loop and do not decrement
+                if (loops > 1) --loops;
                 msc::gotoPosition(start_pos);
-                --loops;
             }
 
             // For IMPORT

@@ -24,9 +24,10 @@ namespace duckparser {
     bool loop_begin      = false;
     bool loop_end        = false;
 
-    int default_delay = 5;
-    int repeat_num    = 0;
-    int loop_num      = 0;
+    unsigned int default_delay = 5;
+    unsigned int repeat_num    = 0;
+
+    int loop_num = 0; // <= 0 for infinite loops
 
     std::string import_path = "";
 
@@ -296,7 +297,7 @@ namespace duckparser {
             }
             // LOOP_BEGIN
             else if (compare(cmd->str, cmd->len, "LOOP_BEGIN", CASE_SENSETIVE)) {
-                loop_num     = to_uint(line_str, line_str_len);
+                loop_num     = to_int(line_str, line_str_len);
                 loop_begin   = true;
                 ignore_delay = true;
             }
