@@ -24,8 +24,9 @@ namespace duckparser {
     bool loop_begin      = false;
     bool loop_end        = false;
 
-    unsigned int default_delay = 5;
-    unsigned int repeat_num    = 0;
+    unsigned int default_delay   = 5;
+    unsigned int character_delay = 0;
+    unsigned int repeat_num      = 0;
 
     int loop_num = 0; // <= 0 for infinite loops
 
@@ -39,6 +40,7 @@ namespace duckparser {
         for (size_t i = 0; i<len; ++i) {
             i += keyboard::write(&str[i]);
             if (i%10==0) tasks::update();
+            if (character_delay > 0) delay(character_delay);
         }
     }
 
@@ -181,6 +183,10 @@ namespace duckparser {
         default_delay = defaultDelay;
     }
 
+    void setCharacterDelay(int delay) {
+        character_delay = delay;
+    }
+
     void parse(const char* str, size_t len) {
         interpret_timestamp = millis();
         led::update();
@@ -258,6 +264,11 @@ namespace duckparser {
             else if (compare(cmd->str, cmd->len, "DELAY", CASE_SENSETIVE)) {
                 sleep(to_uint(line_str, line_str_len));
                 ignore_delay = true;
+            }
+            // CHARDELAY/CHARACTER_DELAY (set delay between each character typed)
+            else if (compare(cmd->str, cmd->len, "CHARACTER_DELAY", CASE_SENSETIVE)) {
+                character_delay = to_uint(line_str, line_str_len);
+                ignore_delay    = true;
             }
             // STRING (-> type each character)
             else if (in_string || compare(cmd->str, cmd->len, "STRING", CASE_SENSETIVE)) {
